@@ -3,4 +3,4 @@ project(Exercises)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Exercises main.cpp Hospitals.cpp)
+add_executable(Exercises MainHospitals.cpp Hospitals.cpp Hospitals.h)
