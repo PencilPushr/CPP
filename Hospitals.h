@@ -10,12 +10,15 @@ class Hospitals {
 private:
 
     //variables
-    //bool** beds; //weird, have a look in Hospitals.cpp
+    bool** bedSpecial;
     std::vector<std::vector<bool>> beds;
     //can also be declared as bool* beds[NoB * NoH] to set the block of memory;
     //double* percentages;
+    double* percentageSpecial;
     std::vector<double> percentages;
-    //https://stackoverflow.com/questions/4412749/are-flexible-array-members-valid-in-c
+
+    int sizeOfBeds;
+    int sizeOfHospitals;
 
     //Class Methods
     void assignBeds();
