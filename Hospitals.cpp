@@ -16,7 +16,7 @@ Hospitals::Hospitals(int noOfHospitals, int noOfBeds) {
     int size = noOfBeds*noOfHospitals;
     //this->bedSpecial = (bool**) calloc(size,sizeof(bool*));
     this->bedSpecial = (bool**) calloc(this->sizeOfHospitals,sizeof(bool*));
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; i++) {
         this->bedSpecial[i] = (bool *) calloc(this->sizeOfBeds, sizeof(bool));
     }
     this->percentageSpecial = (double*) calloc(noOfHospitals,sizeof(double));
@@ -44,16 +44,17 @@ bool Hospitals::randomBool() {
 
 void Hospitals::assignBeds() {
 
+
     for(int a = 0; a < this->sizeOfHospitals; a++){
-        std::cout << "A val is: " << std::to_string(a) << std::endl;
         for(int b= 0; b < this->sizeOfBeds; b++){
-            std::cout << "B val is: " << std::to_string(b) << std::endl;
             this->bedSpecial[a][b] = randomBool();
+            std::string temp = "Unoccupied";
+            if (this->bedSpecial[a][b]){ //if it is not 0/false, it is occupied
+                temp = "Occupied";
+            }
+            std::cout << "Bed number: " << std::to_string(b) << " in hospital number: " << std::to_string(a) << " is " << temp << "." << std::endl;
         }
     }
-
-
-
 
     //need to have a random
     for (int i = 0; i < this->beds.size(); i++) {
@@ -71,19 +72,19 @@ void Hospitals::calcPercentages() {
     int total {0};
     int totalSpecial {0};
     double temp {0.0};
-    double doubleTemp {0.0};
-/*
-    for (int a = 0; a < hospitals; a++) {
-        for (int b = 0; b < bedSize; b++) {
+    double cent {100.0}; //consider this the percentage we want to multiply for percentageSpecial
+
+
+    for (int a = 0; a < this->sizeOfHospitals; a++) {
+        totalSpecial = 0.0;
+        for (int b = 0; b < this->sizeOfBeds; b++) {
             if (this->bedSpecial[b][a]){
-                totalSpecial++;
+                totalSpecial = totalSpecial + 1.0;
             }
         }
-        doubleTemp = ((double) totalSpecial) / ((double) bedSize);
-        doubleTemp *= 100.0;
-        this->percentageSpecial[a] = temp;
+        this->percentageSpecial[a] = cent*(totalSpecial/this->sizeOfBeds);
     }
-    */
+
 
     for (int i = 0; i < hospitals; i++) {
         for (int j = 0; j < bedSize; j++) {
@@ -138,3 +139,5 @@ void Hospitals::printMinPercentage() {
 void Hospitals::printMaxPercentage() {
 
 }
+
+
