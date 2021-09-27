@@ -9,30 +9,31 @@ Hospitals::Hospitals(int noOfHospitals, int noOfBeds) {
         noOfHospitals = 1;
     }
 
+    //Calloc cannot hold the integer values as they are pointers to the memory address only
     this->sizeOfBeds = noOfBeds;
     this->sizeOfHospitals = noOfHospitals;
 
     //Memory block size
     int size = noOfBeds*noOfHospitals;
+
     //this->bedSpecial = (bool**) calloc(size,sizeof(bool*));
-    this->bedSpecial = (bool**) calloc(this->sizeOfHospitals,sizeof(bool*));
+    this->bedSpecial = (bool**) calloc(this->sizeOfHospitals,sizeof(bool*)); //pointerA to pointerB
     for (int i = 0; i < size; i++) {
-        this->bedSpecial[i] = (bool *) calloc(this->sizeOfBeds, sizeof(bool));
+        this->bedSpecial[i] = (bool *) calloc(this->sizeOfBeds, sizeof(bool)); // pointerB to int
     }
     this->percentageSpecial = (double*) calloc(noOfHospitals,sizeof(double));
 
+    //pre-allocating or reserving memory blocks
     this->beds.reserve(noOfHospitals * noOfBeds);
+    //vector<vector<int>> M;
+    //int m = number of rows, n = number of columns;
+    this->beds.resize(this->sizeOfHospitals, std::vector<int>(this->sizeOfBeds));
+
     this->percentages.reserve(noOfHospitals);
 
     assignBeds();
     calcPercentages();
 
-    /*
-    for (int i = 0; i < this->sizeOfHospitals; i++){
-        free(this->bedSpecial[i]);
-    }
-    free(this->bedSpecial);
-     */
 }
 
 bool Hospitals::randomBool() {
@@ -56,10 +57,12 @@ void Hospitals::assignBeds() {
         }
     }
 
-    //need to have a random
     for (int i = 0; i < this->beds.size(); i++) {
-        for (int j = 0; j < this->beds[0].size(); j++) {
+        for (int j = 0; j < this->beds[i].size(); j++) {
             this->beds[i][j] = randomBool();
+            if (this->beds[i][j]){
+                std::cout << "bacon" << std::endl;
+            }
         }
     }
 
@@ -99,36 +102,39 @@ void Hospitals::calcPercentages() {
 }
 
 void Hospitals::printBeds() {
-/*
-    std::string temp;
+
+    std::string temp {""};
     int hospitals = this->sizeOfHospitals;
     int beds = this->sizeOfBeds;
 
-    for (int i = 0; i < hospitals; i++) {
+    for (int i = 0; i < this->beds.size(); i++) {
         temp = "Hospitals " + std::to_string(i) + " : [ ";
-        for (int j = 0; j < beds; j++) {
+        for (int j = 0; j < this->beds[i].size(); j++) {
             if (this->beds[j][i]) {
-                temp += "true";
+                temp = temp + "true";
             } else {
-                temp += "false";
+                temp = temp + "false";
             }
-            if (j != beds - 1) {
-                temp += ", ";
+            if (j != this->beds.size() - 1) {
+                temp = temp + ", ";
             }
         }
-        temp += " ]";
+        temp = temp + " ]";
         std::cout << temp << std::endl;
     }
-*/
 
 }
 
 void Hospitals::printPercentages() {
-    /*
-    for (int i = 0; i < this->sizeOfHospitals; ++i) {
-        std::cout << std::to_string(this->percentageSpecial[i]) << std::endl;
+
+    std::string temp;
+
+    for(int i = 0; i < this->sizeOfHospitals; i++){
+        temp = "Hospital " + std::to_string(i) + " (%): " + std::to_string(this->percentageSpecial[i]);
+        std::cout << temp << std::endl;
     }
-    */
+    std::cout << "It is over." << std::endl;
+
 
 }
 
@@ -140,4 +146,10 @@ void Hospitals::printMaxPercentage() {
 
 }
 
+void Hospitals::GarbageBedsandHospitals() {
+    free(this->bedSpecial);
+}
 
+void Hospitals::GarbagePercentage(){
+    free(this->percentageSpecial);
+}

@@ -34,6 +34,8 @@ public:
     void printPercentages();
     void printMinPercentage();
     void printMaxPercentage();
+    void GarbageBedsandHospitals();
+    void GarbagePercentage();
 };
 
 #endif //EXERCISES_HOSPITALS_H
