@@ -12,7 +12,7 @@ MriData::MriData() {
 void MriData::readData2D() {
 //std::vector we have included vector in MRIData, if unused don't forget to delete from the .h file.
 
-    std::ifstream inputFile("149.csv");
+    std::ifstream inputFile("/home/averagejoe/CLionProjects/Exercises/149.csv");
     //inputFile.open("149.csv");
 
     // Make sure the file is open
@@ -22,8 +22,8 @@ void MriData::readData2D() {
     }
 
     //helper vars
-    rowSize = 0;
-    colSize = 0;
+    int rowSize = 0;
+    int colSize = 0;
     std::string line;
 
     //need to get the size/requirements of the file, akin to moving furniture
@@ -35,12 +35,35 @@ void MriData::readData2D() {
         while(!inputFile.eof()){
             std::getline(inputFile, line);
             rowSize++;
+            if (rowSize == 1){
+                std::istringstream iss(line);
+            }
         }
+        int len = line.length();
+        std::cout << len << std::endl;
+        for (int i = 0; i < len; i++) {
+            if (line[i] == ',') //don't know what line[i] != ',' would do.
+                colSize++;
+        }
+        colSize+=1; //turns out that there is one less comma per line
     }
+    std::cout << "Column size is: " << colSize << " Row size is: " << rowSize << std::endl;
+
+    //Memory block size (of 2d array)
+    int size = rowSize * colSize;
 
     //calloc the array. "size"
+   // this->arrayOfMRI2D = (int **) calloc(rowSize, sizeof(int*));
+   // for (int i = 0; i < size; i++) {
+     //   this->arrayOfMRI2D[i] = (int *) calloc(colSize, sizeof(bool));
+    //}
 
     //fill in the calloc'd array
+    /*while(!inputFile.eof()){
+        std::getline(inputFile, line);
+
+    }
+     */
 }
 
 void MriData::readData3D(int file1, int file2) {

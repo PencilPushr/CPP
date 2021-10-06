@@ -27,7 +27,7 @@ Hospitals::Hospitals(int noOfHospitals, int noOfBeds) {
     this->beds.reserve(noOfHospitals * noOfBeds);
     //vector<vector<int>> M;
     //int m = number of rows, n = number of columns;
-    this->beds.resize(this->sizeOfHospitals, std::vector<int>(this->sizeOfBeds));
+    //this->beds.resize(this->sizeOfHospitals, std::vector<int>(this->sizeOfBeds));
 
     this->percentages.reserve(noOfHospitals);
 

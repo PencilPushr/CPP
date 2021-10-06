@@ -5,5 +5,7 @@
 #ifndef EXERCISES_INCLUDES_H
 #define EXERCISES_INCLUDES_H
 
+#include <iostream>
+#include <vector>
 
 #endif //EXERCISES_INCLUDES_H

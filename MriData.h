@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 
 class MriData{
 private:
@@ -17,11 +18,6 @@ private:
     int*** arrayOfMRI3D;
 
     int fileNumber;
-
-    //helper vars
-    int rowSize;
-    int colSize;
-    std::string FilePath;
 
 public:
     MriData();
