@@ -9,6 +9,8 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <cstring>
+#include <filesystem>
 
 class MriData{
 private:
@@ -17,7 +19,7 @@ private:
     int** arrayOfMRI2D;
     int*** arrayOfMRI3D;
 
-    int fileNumber;
+    char* fileNumber;
 
 public:
     MriData();
@@ -25,6 +27,9 @@ public:
     //class methods
     void readData3D(int file1, int file2);
     void readData2D();
+
+    //Garbage Disposal
+    void FreeMemory();
 
     //getters and setters
     int getIntensity2D();
