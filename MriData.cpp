@@ -5,7 +5,7 @@
 #include "MriData.h"
 
 MriData::MriData() {
-    MriData::readData2D();
+    //MriData::readData2D();
     MriData::readData3D(149, 149);
 }
 
@@ -77,10 +77,11 @@ void MriData::readData3D(int file1, int file2) {
     int colCount = 1;//There must be at least 1 column
     int filesCount = 0;
     std::string line;
+    std::vector<std::string> fileName;
     std::vector<std::vector<std::vector<int>>> array3D;
 
     //first collect the fileSize (number of files in the given directory)
-    auto dirIter = std::filesystem::directory_iterator("/home/averagejoe/CLionProjects/Exercises/");
+    auto dirIter = std::filesystem::directory_iterator("/home/averagejoe/CLionProjects/Exercises/Data");
     int fileCount = 0;
 
     for (auto& entry : dirIter)
@@ -88,9 +89,11 @@ void MriData::readData3D(int file1, int file2) {
         if (entry.is_regular_file())
         {
             ++fileCount;
+            fileName.push_back(entry.path());
         }
     }
     std::cout << fileCount << std::endl;
+    std::cout << fileName[0] << std::endl;
 
     //need to dynamically get the name of the first file in the directory, then append it to the string
     // should then act as the inputFile to peek at the contents.
