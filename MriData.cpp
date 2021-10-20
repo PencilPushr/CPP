@@ -93,11 +93,12 @@ void MriData::readData3D(int file1, int file2) {
         }
     }
     std::cout << fileCount << std::endl;
-    std::cout << fileName[0] << std::endl;
+    //std::cout << fileName[0] << std::endl;
 
     //need to dynamically get the name of the first file in the directory, then append it to the string
     // should then act as the inputFile to peek at the contents.
-    std::ifstream inputFile("/home/averagejoe/CLionProjects/Exercises/149.csv");
+    std::ifstream inputFile(fileName.at(0));
+    //std::ifstream inputFile("/home/averagejoe/CLionProjects/Exercises/149.csv");
 
     // Make sure the file is open
     if(!inputFile.is_open()){
@@ -108,8 +109,6 @@ void MriData::readData3D(int file1, int file2) {
     //need to get the size/requirements of the file, akin to moving furniture
     //go back, get the correct size "lorrys", now you can move the furniture.
     //Remember, every "roW" is equally long. If we get one rowlength, we have every rowlength.
-
-    // scouting
 
     //if(inputFile.peek()) consider trying this so we no longer have to reset the file back to the beginning.
 
