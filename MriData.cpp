@@ -124,6 +124,8 @@ void MriData::readData3D(int file1, int file2) {
         }
     }
 
+    std::cout << "Column size is: " << colCount << " \n" << "Row size is: " << rowCount << std::endl;
+
     for (int i = file1; i <= file2; i++) {
         //std::string files = "/home/averagejoe/CLionProjects/Exercises/" << reinterpret_cast<char *>(this->fileNumber) << ".csv";
         //std::ifstream inputFile(files);
