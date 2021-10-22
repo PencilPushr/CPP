@@ -30,6 +30,7 @@ void MriData::readData2D() {
     //Remember, every "roW" is equally long. If we get one rowlength, we have every rowlength.
 
     // scouting
+    //if(inputFile.peek()) consider trying this so we no longer have to reset the file back to the beginning.
     if(inputFile.good()){
         while(!inputFile.eof()){
             std::getline(inputFile, line);
@@ -60,7 +61,7 @@ void MriData::readData2D() {
             this->arrayOfMRI2D[0][0] = 0;
             if (line[i] == ',') {
                 for (int j = 0; j < colCount; j++){
-                    this->arrayOfMRI2D;
+                    this->arrayOfMRI2D[i][j] = line[i]+1;
                 }
             }
         }
@@ -84,6 +85,14 @@ void MriData::readData3D(int file1, int file2) {
     auto dirIter = std::filesystem::directory_iterator("/home/averagejoe/CLionProjects/Exercises/Data");
     int fileCount = 0;
 
+    if(std::filesystem::is_empty("/home/averagejoe/CLionProjects/Exercises/Data")){
+        std::cout << "Directory is empty!";
+        exit(1);
+    }
+
+    //this CAN BE MADE MORE EFFICIENT!!!
+    //For now, we simply iterate through the known files in a directory and append them to a vector
+    //however we could simply skip this by directly iterating through the files themselves
     for (auto& entry : dirIter)
     {
         if (entry.is_regular_file())
@@ -92,13 +101,12 @@ void MriData::readData3D(int file1, int file2) {
             fileName.push_back(entry.path());
         }
     }
-    std::cout << fileCount << std::endl;
-    //std::cout << fileName[0] << std::endl;
 
     //need to dynamically get the name of the first file in the directory, then append it to the string
     // should then act as the inputFile to peek at the contents.
+
+    //for(int i = 0; i < fileName.size(); i++)
     std::ifstream inputFile(fileName.at(0));
-    //std::ifstream inputFile("/home/averagejoe/CLionProjects/Exercises/149.csv");
 
     // Make sure the file is open
     if(!inputFile.is_open()){
@@ -106,29 +114,11 @@ void MriData::readData3D(int file1, int file2) {
         exit(1);
     }
 
-    //need to get the size/requirements of the file, akin to moving furniture
-    //go back, get the correct size "lorrys", now you can move the furniture.
-    //Remember, every "roW" is equally long. If we get one rowlength, we have every rowlength.
-
-    //if(inputFile.peek()) consider trying this so we no longer have to reset the file back to the beginning.
-
-    if(inputFile.good()){
-        while(!inputFile.eof()){
+    for (int i = 0; i < fileCount; i++) {
+        while(inputFile.peek()!=EOF){
             std::getline(inputFile, line);
-            rowCount++;
-            if (rowCount == 1){
-                for (int i = 0; i < line.length(); i++) {
-                    if (line[i] == ',') {colCount++;}
-                }
-            }
+
         }
-    }
-
-    std::cout << "Column size is: " << colCount << " \n" << "Row size is: " << rowCount << std::endl;
-
-    for (int i = file1; i <= file2; i++) {
-        //std::string files = "/home/averagejoe/CLionProjects/Exercises/" << reinterpret_cast<char *>(this->fileNumber) << ".csv";
-        //std::ifstream inputFile(files);
     }
 
 
