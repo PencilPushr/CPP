@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/averagejoe/CLionProjects/Exercises/MriData.cpp
+MriData.h
+/home/averagejoe/CLionProjects/Exercises/MriData.h
+
+/home/averagejoe/CLionProjects/Exercises/MriData.h
+iostream
+-
+fstream
+-
+vector
+-
+sstream
+-
+cstring
+-
+filesystem
+-
+

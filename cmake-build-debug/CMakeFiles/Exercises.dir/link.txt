@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/Exercises.dir/MainHospitals.cpp.o CMakeFiles/Exercises.dir/Hospitals.cpp.o CMakeFiles/Exercises.dir/MriData.cpp.o -o Exercises 
