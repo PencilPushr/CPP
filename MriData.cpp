@@ -5,8 +5,9 @@
 #include "MriData.h"
 
 MriData::MriData() {
+    MriData::DirectoryNFilePeeker();
     //MriData::readData2D();
-    MriData::readData3D(149, 149);
+    //MriData::readData3D(149, 149);
 }
 
 void MriData::readData2D() {
@@ -21,28 +22,11 @@ void MriData::readData2D() {
     }
 
     //helper vars
-    int rowCount = 0;
-    int colCount = 1;//There must be at least 1 column
     std::string line;
 
     //need to get the size/requirements of the file, akin to moving furniture
     //go back, get the correct size "lorrys", now you can move the furniture.
     //Remember, every "roW" is equally long. If we get one rowlength, we have every rowlength.
-
-    // scouting
-    //if(inputFile.peek()) consider trying this so we no longer have to reset the file back to the beginning.
-    if(inputFile.good()){
-        while(!inputFile.eof()){
-            std::getline(inputFile, line);
-            rowCount++;
-            if (rowCount == 1){
-                for (int i = 0; i < line.length(); i++) {
-                    if (line[i] == ',') {colCount++;}
-                }
-            }
-        }
-    }
-    std::cout << "Column size is: " << colCount << " \n" << "Row size is: " << rowCount << std::endl;
 
     //Memory block size (of 2d array)
     int size = rowCount * colCount;
@@ -74,17 +58,43 @@ void MriData::readData2D() {
 void MriData::readData3D(int file1, int file2) {
 
     //helper vars
-    int rowCount = 0;
-    int colCount = 1;//There must be at least 1 column
-    int filesCount = 0;
     std::string line;
     std::vector<std::string> fileName;
     std::vector<std::vector<std::vector<int>>> array3D;
 
+    //need to dynamically get the name of the first file in the directory, then append it to the string
+    // should then act as the inputFile to peek at the contents.
+
+    //for(int i = 0; i < fileName.size(); i++)
+    std::ifstream inputFile(filesFound.at(0));
+
+    // Make sure the file is open
+    if(!inputFile.is_open()){
+        std::cout << "Cannot open file!";
+        exit(1);
+    }
+
+    for (int i = 0; i < filesFound.size(); i++) {
+        while(inputFile.peek()!=EOF){
+            std::getline(inputFile, line);
+            for (int j = 0; j < rowCount; ++j) {
+                
+            }
+        }
+    }
+
+}
+
+void MriData::DirectoryNFilePeeker(){
+
+    //helper vars
+    std::vector<std::string> fileName;
+    std::string line;
+
     //first collect the fileSize (number of files in the given directory)
     auto dirIter = std::filesystem::directory_iterator("/home/averagejoe/CLionProjects/Exercises/Data");
-    int fileCount = 0;
 
+    //check: if directory is empty
     if(std::filesystem::is_empty("/home/averagejoe/CLionProjects/Exercises/Data")){
         std::cout << "Directory is empty!";
         exit(1);
@@ -102,10 +112,7 @@ void MriData::readData3D(int file1, int file2) {
         }
     }
 
-    //need to dynamically get the name of the first file in the directory, then append it to the string
-    // should then act as the inputFile to peek at the contents.
-
-    //for(int i = 0; i < fileName.size(); i++)
+    //get the first file
     std::ifstream inputFile(fileName.at(0));
 
     // Make sure the file is open
@@ -114,15 +121,35 @@ void MriData::readData3D(int file1, int file2) {
         exit(1);
     }
 
-    for (int i = 0; i < fileCount; i++) {
-        while(inputFile.peek()!=EOF){
+    if (inputFile.good()){
+        while(!inputFile.eof()){
             std::getline(inputFile, line);
-
+            rowCount++;
+            if (rowCount == 1){
+                for (int i = 0; i < line.length(); i++) {
+                    if (line[i] == ',') {colCount++;}
+                }
+            }
         }
+        std::cout << "Rows: " << rowCount << " Columns: " << colCount << std::endl;
     }
 
-
 }
+
+void MriData::ReadIn3D(){
+
+    std::vector<std::vector<double> > values;
+    std::ifstream fin("textread.csv");
+    for (std::string line; std::getline(fin, line); )
+    {
+        std::replace(line.begin(), line.end(), ',', ' ');
+        std::istringstream in(line);
+        values.push_back(
+                std::vector<double>(std::istream_iterator<double>(in),
+                                    std::istream_iterator<double>()));
+    }
+}
+
 
 void MriData::FreeMemory(){
     free(this->arrayOfMRI2D);
