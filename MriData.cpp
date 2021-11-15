@@ -136,6 +136,27 @@ void MriData::DirectoryNFilePeeker(){
 
 }
 
+void MriData::CstyleReader(){
+
+    //THIS IS NULL, CHANGE IT FOR IT TO WORK WITH THE !!!std::vector<filesFound>!!!
+    auto FILENAME = nullptr;
+
+    FILE* fp = fopen(FILENAME, "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    char* line = NULL;
+    size_t len = 0;
+    while ((getline(&line, &len, fp)) != -1) {
+        // using printf() in all tests for consistency
+        printf("%s", line);
+    }
+    fclose(fp);
+    if (line)
+        free(line);
+
+}
+
 void MriData::ReadIn3D(){
 
     std::vector<std::vector<double> > values;

@@ -44,6 +44,8 @@ public:
     void ReadIn3D();
 
     void DirectoryNFilePeeker();
+
+    void CstyleReader();
 };
 
 
