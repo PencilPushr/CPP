@@ -139,6 +139,7 @@ void MriData::DirectoryNFilePeeker(){
 void MriData::CstyleReader(){
 
     //THIS IS NULL, CHANGE IT FOR IT TO WORK WITH THE !!!std::vector<filesFound>!!!
+    //https://stackoverflow.com/questions/7868936/read-file-line-by-line-using-ifstream-in-c
     auto FILENAME = nullptr;
 
     FILE* fp = fopen(FILENAME, "r");
